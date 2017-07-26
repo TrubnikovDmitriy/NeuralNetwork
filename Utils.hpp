@@ -4,9 +4,9 @@
 #include <cmath>
 
 class Neuron;
-class Synapce;
+class Synapse;
 
-float activateFunction(float x) {
+inline float activateFunction(float x) {
 
     return (float)(1 / (1 + exp(-x)));
 }

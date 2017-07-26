@@ -1,23 +1,23 @@
 #include "Neuron.hpp"
-#include "Synapce.hpp"
+#include "Synapse.hpp"
 #include <cassert>
 
-Neuron::Neuron(Synapce* outp) {
+Neuron::Neuron(Synapse* outp) {
     outputSynapce = outp;
 }
 Neuron::Neuron() {
     outputSynapce = nullptr;
 }
 
-void Neuron::addOutputSynapce(Synapce *new_synapce) {
+//void Neuron::setOutputSynapce(Synapse *new_synapce) {
+//
+//    assert(new_synapce != nullptr);
+//    outputSynapce = new_synapce;
+//}
 
-    assert(new_synapce != nullptr);
-    outputSynapce = new_synapce;
-}
-
-BiasNeuron::BiasNeuron(Synapce *outp): Neuron(outp) {}
-InputNeuron::InputNeuron(Synapce *outp): Neuron(outp), input_data(0.0f) {}
-HiddenNeuron::HiddenNeuron(Synapce *outp): Neuron(outp) {}
+BiasNeuron::BiasNeuron(Synapse *outp): Neuron(outp) {}
+InputNeuron::InputNeuron(Synapse *outp): Neuron(outp), input_data(0.0f) {}
+HiddenNeuron::HiddenNeuron(Synapse *outp): Neuron(outp) {}
 
 float InputNeuron::getOut() {
     return input_data;
@@ -32,11 +32,11 @@ float HiddenNeuron::getOut() {
     return out;
 }
 void HiddenNeuron::calculate() {
-    sumSynapces();
+    sumSynapses();
     activate();
 }
 
-void HiddenNeuron::sumSynapces() {
+void HiddenNeuron::sumSynapses() {
 
     sum = 0;
     for(auto inputSynapce: inputSynapces)
@@ -47,8 +47,11 @@ void HiddenNeuron::activate() {
     out = activateFunction(sum);
 }
 
-void HiddenNeuron::addInputSynapce(Synapce *new_synapce) {
+void HiddenNeuron::addInputSynapce(Synapse *new_synapse) {
 
-    assert(new_synapce != nullptr);
-    inputSynapces.push_back(new_synapce);
+    assert(new_synapse != nullptr);
+    inputSynapces.push_back(new_synapse);
+}
+std::vector<Synapse*> HiddenNeuron::getInputSynapses() {
+    return inputSynapces;
 }

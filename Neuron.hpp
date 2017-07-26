@@ -6,29 +6,30 @@
 
 class Neuron {
 public:
-    Neuron(Synapce* outp);
+    Neuron(Synapse* outp);
     Neuron();
     virtual ~Neuron() {};
 
-    void addOutputSynapce(Synapce* new_synapce);
+//    void setOutputSynapce(Synapse *new_synapce);
+//    void addInputSynapce(Synapse* new_synapce) {}; ???
     virtual float getOut() = 0;
 
 protected:
-    Synapce* outputSynapce;
+    Synapse* outputSynapce;
 };
 
-class BiasNeuron: protected Neuron {
+class BiasNeuron: public Neuron {
 public:
-    BiasNeuron(Synapce* outp);
+    BiasNeuron(Synapse* outp);
     BiasNeuron() {};
     ~BiasNeuron() {};
 
     float getOut() { return 1.0f; };
 };
 
-class InputNeuron: protected Neuron {
+class InputNeuron: public Neuron {
 public:
-    InputNeuron(Synapce* outp);
+    InputNeuron(Synapse* outp);
     InputNeuron() {};
     ~InputNeuron() {};
 
@@ -38,21 +39,22 @@ private:
     float input_data;
 };
 
-class HiddenNeuron: protected Neuron {
+class HiddenNeuron: public Neuron {
 public:
-    HiddenNeuron(Synapce* outp);
+    HiddenNeuron(Synapse* outp);
     HiddenNeuron() {};
     ~HiddenNeuron() {};
 
     void calculate();
     float getOut();
-    void addInputSynapce(Synapce* new_synapce);
+    void addInputSynapce(Synapse* new_synapse);
+    std::vector<Synapse*> getInputSynapses();
 
 private:
-    void sumSynapces();
+    void sumSynapses();
     void activate();
 
-    std::vector<Synapce*> inputSynapces;
+    std::vector<Synapse*> inputSynapces;
     float sum;
     float out;
 };

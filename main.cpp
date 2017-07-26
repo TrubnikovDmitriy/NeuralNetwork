@@ -1,6 +1,7 @@
 #include <iostream>
+#include "NeuralNetwork.hpp"
 
 int main() {
-    std::cout << "Hello, World!" << std::endl;
+    NeuralNetwork network(2, 2, 1, false);
     return 0;
 }
