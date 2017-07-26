@@ -9,6 +9,12 @@ public:
     Neuron() {};
     virtual ~Neuron() {};
     virtual float getOut() = 0;
+
+    void addOutputSynapce(Synapse* new_synapse);
+    std::vector<Synapse*> getOutputSynapses();
+
+private:
+    std::vector<Synapse*> outputSynapces;
 };
 
 class BiasNeuron: public Neuron {

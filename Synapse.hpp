@@ -13,13 +13,14 @@ public:
     float getPrevDelta();
     void addWeight(float dw);
     float getWeight();
+    Neuron* getOutputNeuron();
+    Neuron* getInputNeuron();
 
 private:
-    float output;
     float weight;
     float last_dw;
     Neuron* in;
-    Neuron* out; // возможно стоит убрать out
+    Neuron* out;
 };
 
 #endif //NEURAL_NETWORK_SYNAPCE_HPP
