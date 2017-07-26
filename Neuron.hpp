@@ -11,7 +11,6 @@ public:
     virtual ~Neuron() {};
 
     void addOutputSynapce(Synapce* new_synapce);
-    virtual void calculate() = 0;
     virtual float getOut() = 0;
 
 protected:
@@ -24,8 +23,19 @@ public:
     BiasNeuron() {};
     ~BiasNeuron() {};
 
-    void calculate() {};
     float getOut() { return 1.0f; };
+};
+
+class InputNeuron: protected Neuron {
+public:
+    InputNeuron(Synapce* outp);
+    InputNeuron() {};
+    ~InputNeuron() {};
+
+    void setInput(float data);
+    float getOut();
+private:
+    float input_data;
 };
 
 class HiddenNeuron: protected Neuron {

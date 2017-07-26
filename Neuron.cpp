@@ -16,9 +16,16 @@ void Neuron::addOutputSynapce(Synapce *new_synapce) {
 }
 
 BiasNeuron::BiasNeuron(Synapce *outp): Neuron(outp) {}
-HiddenNeuron::HiddenNeuron(Synapce *outp): Neuron(outp) {
-    inputSynapces = inp;
+InputNeuron::InputNeuron(Synapce *outp): Neuron(outp), input_data(0.0f) {}
+HiddenNeuron::HiddenNeuron(Synapce *outp): Neuron(outp) {}
+
+float InputNeuron::getOut() {
+    return input_data;
 }
+void InputNeuron::setInput(float data) {
+    input_data = data;
+}
+
 
 float HiddenNeuron::getOut() {
 
