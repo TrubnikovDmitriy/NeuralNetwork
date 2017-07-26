@@ -1,6 +1,7 @@
 #include <cassert>
 #include <random>
 #include "Synapse.hpp"
+#include "Neuron.hpp"
 
 
 Synapse::Synapse(Neuron *_in, Neuron *_out) {
@@ -19,10 +20,9 @@ Synapse::Synapse() {
 }
 
 float Synapse::getOutput() {
-    return output;
-}
-void Synapse::setInput(float input) {
-    output = input * weight;
+    // Дергаем синапсы - заставляем их получать
+    // значения из предыдущего слоя нейронов.
+    return weight * in->getOut();
 }
 
 float Synapse::getPrevDelta() {

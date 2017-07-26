@@ -10,7 +10,6 @@ public:
     ~Synapse() {};
 
     float getOutput();
-    void setInput(float input);
     float getPrevDelta();
     void addWeight(float dw);
     float getWeight();
@@ -20,7 +19,7 @@ private:
     float weight;
     float last_dw;
     Neuron* in;
-    Neuron* out;
+    Neuron* out; // возможно стоит убрать out
 };
 
 #endif //NEURAL_NETWORK_SYNAPCE_HPP
