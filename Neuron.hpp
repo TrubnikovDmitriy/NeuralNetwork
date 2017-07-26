@@ -10,6 +10,7 @@ public:
     Neuron();
     virtual ~Neuron() {};
 
+    void addOutputSynapce(Synapce* new_synapce);
     virtual void calculate() = 0;
     virtual float getOut() = 0;
 
@@ -29,12 +30,13 @@ public:
 
 class HiddenNeuron: protected Neuron {
 public:
-    HiddenNeuron(std::vector<Synapce*> inp, Synapce* outp);
+    HiddenNeuron(Synapce* outp);
     HiddenNeuron() {};
     ~HiddenNeuron() {};
 
     void calculate();
     float getOut();
+    void addInputSynapce(Synapce* new_synapce);
 
 private:
     void sumSynapces();
