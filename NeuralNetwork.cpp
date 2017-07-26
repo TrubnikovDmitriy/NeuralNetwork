@@ -80,3 +80,25 @@ std::vector<float> NeuralNetwork::getResult(std::vector<float> input_data) {
     }
     return result;
 }
+void NeuralNetwork::Learning(std::vector<std::vector<float>> input_data,
+                             std::vector<std::vector<float>> output_data) {
+
+    for (int i = 0; i < input_data.size(); ++i) {
+        cout << getResult(input_data[i])[0] << endl;
+        cout << "Цикл №" << i << ": ошибка ";
+        cout << calculateMistake(output_data[i]) * 100 << "%" << endl;
+    }
+}
+
+float NeuralNetwork::calculateMistake(std::vector<float> correct_output) {
+
+    assert(correct_output.size() == outputNeurons.size());
+
+    float sum = 0;
+    float delta = 0;
+    for (int i = 0; i < outputNeurons.size(); ++i) {
+        delta = correct_output[i] - outputNeurons[i]->getOut();
+        sum += delta * delta;
+    }
+    return (sum / outputNeurons.size());
+}
