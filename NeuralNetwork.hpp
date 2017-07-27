@@ -28,7 +28,7 @@ private:
     std::vector<InputNeuron*> inputNeurons;
     std::vector<HiddenNeuron*> outputNeurons;
     std::vector<HiddenNeuron*> hiddenNeurons;
-    BiasNeuron* bias;
+    BiasNeuron* biasNeuron;
 
 };
 

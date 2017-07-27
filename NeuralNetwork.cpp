@@ -43,7 +43,18 @@ NeuralNetwork::NeuralNetwork(int inpNeurons, int hidNeurons, int outNeurons, boo
         }
     }
 
-    // TODO bias
+    // bias <---> output
+    if (bias) {
+        biasNeuron = new BiasNeuron();
+        for (auto outputNeuron: outputNeurons) {
+            synapce = new Synapse(biasNeuron, outputNeuron);
+            outputNeuron->addInputSynapce(synapce);
+            biasNeuron->addOutputSynapce(synapce);
+            ++count_synapces;
+        }
+    } else {
+        biasNeuron = nullptr;
+    }
 
 
     std::cout << "Создано " << count_synapces << " синапсов" << endl;
@@ -64,8 +75,7 @@ NeuralNetwork::~NeuralNetwork() {
     for (auto inputNeuron: inputNeurons)
         delete inputNeuron;
 
-//    delete bias;
-    // TODO bias
+    delete biasNeuron;
 }
 void NeuralNetwork::deleteSynapses(std::vector<Synapse*> &synapses) {
 
@@ -156,7 +166,7 @@ dictionary NeuralNetwork::createDelta(float learning_rate, std::vector<float> co
 }
 void NeuralNetwork::changesWeights(dictionary &neuronDelta) {
 
-    const float moment = 0.2;
+    const float moment = 0.3;
     float delta, dw, q;
 
     // В словаре хранится недосчитанный градиент для каждого узла,
