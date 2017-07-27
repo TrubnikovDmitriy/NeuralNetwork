@@ -15,14 +15,14 @@ public:
     ~NeuralNetwork();
 
     std::vector<float> getResult(std::vector<float> input_data);
-    void Learning(std::vector<std::vector<float>> input_data,
-                  std::vector<std::vector<float>> output_data,
-                  float learning_rate, int cycles);
+    void Learning_BackPropgation(std::vector<std::vector<float>> input_data,
+                                 std::vector<std::vector<float>> output_data,
+                                 float learning_rate, int cycles, float moment);
 
 private:
     dictionary createDelta(float learning_rate, std::vector<float> correct_output);
     float calculateMistake(std::vector<float> correct_output, bool print = false);
-    void changesWeights(dictionary &neuronDelta);
+    void changesWeights(dictionary &neuronDelta, float moment);
     void deleteSynapses(std::vector<Synapse *> &synapses);
 
     std::vector<InputNeuron*> inputNeurons;

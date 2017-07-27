@@ -9,14 +9,14 @@ Synapse::Synapse(Neuron *_in, Neuron *_out) {
     in = _in;
     out = _out;
     last_dw = 0;
-    weight = random() % 20 - 10;
+    weight = random() % 10 - 5;
 }
 Synapse::Synapse() {
 
     in = nullptr;
     out = nullptr;
     last_dw = 0;
-    weight = random() % 100;
+    weight = random() % 10 - 5;
 }
 
 float Synapse::getOutput() {

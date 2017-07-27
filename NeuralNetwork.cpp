@@ -12,6 +12,7 @@ using std::endl;
 NeuralNetwork::NeuralNetwork(int inpNeurons, int hidNeurons, int outNeurons, bool bias) {
 
     srand((u_int)time(0));
+//    srand(1);
 
     // Создание нейронов
     for (int i = 0; i < inpNeurons; ++i)
@@ -83,6 +84,22 @@ void NeuralNetwork::deleteSynapses(std::vector<Synapse*> &synapses) {
         delete synapce;
 }
 
+void NeuralNetwork::Learning_BackPropgation(std::vector<std::vector<float>> input_data,
+                                            std::vector<std::vector<float>> output_data,
+                                            float learning_rate, int cycles, float moment) {
+
+    for (int j = 0; j < cycles; ++j) {
+        for (int i = 0; i < input_data.size(); ++i) {
+            getResult(input_data[i]);
+            calculateMistake(output_data[i], !(bool)(j % 1000));
+            dictionary neuronDelta = createDelta(learning_rate, output_data[i]);
+            changesWeights(neuronDelta, moment);
+        }
+        if (!(j % 1000))
+            cout << endl;
+    }
+}
+
 std::vector<float> NeuralNetwork::getResult(std::vector<float> input_data) {
 
     assert(input_data.size() == inputNeurons.size());
@@ -98,20 +115,7 @@ std::vector<float> NeuralNetwork::getResult(std::vector<float> input_data) {
     }
     return result;
 }
-void NeuralNetwork::Learning(std::vector<std::vector<float>> input_data,
-                             std::vector<std::vector<float>> output_data,
-                             float learning_rate, int cycles) {
 
-    for (int j = 0; j < cycles; ++j) {
-        for (int i = 0; i < input_data.size(); ++i) {
-            getResult(input_data[i]);
-            calculateMistake(output_data[i], true);
-            dictionary neuronDelta = createDelta(learning_rate, output_data[i]);
-            changesWeights(neuronDelta);
-        }
-        cout << endl;
-    }
-}
 float NeuralNetwork::calculateMistake(std::vector<float> correct_output, bool print) {
 
     assert(correct_output.size() == outputNeurons.size());
@@ -164,9 +168,9 @@ dictionary NeuralNetwork::createDelta(float learning_rate, std::vector<float> co
 
     return neuronDelta;
 }
-void NeuralNetwork::changesWeights(dictionary &neuronDelta) {
 
-    const float moment = 0.3;
+void NeuralNetwork::changesWeights(dictionary &neuronDelta, float moment) {
+
     float delta, dw, q;
 
     // В словаре хранится недосчитанный градиент для каждого узла,
