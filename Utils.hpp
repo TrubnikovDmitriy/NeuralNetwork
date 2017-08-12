@@ -8,7 +8,7 @@ class Synapse;
 
 inline float activateFunction(float x) {
 
-    return (float)(1 / (1 + exp(-x)));
+    return (float)(1 / (1 + exp(-x/100)));
 }
 inline float diffActivate(float out) {
 

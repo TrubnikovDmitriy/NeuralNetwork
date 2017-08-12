@@ -89,7 +89,7 @@ void NeuralNetwork::Learning_BackPropgation(std::vector<std::vector<float>> inpu
                                             float learning_rate, int cycles, float moment) {
 
     for (int j = 0; j < cycles; ++j) {
-        for (int i = 0; i < input_data.size(); ++i) {
+        for (u_int i = 0; i < input_data.size(); ++i) {
             getResult(input_data[i]);
             calculateMistake(output_data[i], !(bool)(j % 1000));
             dictionary neuronDelta = createDelta(learning_rate, output_data[i]);
@@ -103,7 +103,7 @@ void NeuralNetwork::Learning_BackPropgation(std::vector<std::vector<float>> inpu
 std::vector<float> NeuralNetwork::getResult(std::vector<float> input_data) {
 
     assert(input_data.size() == inputNeurons.size());
-    for (int i = 0; i < inputNeurons.size(); ++i)
+    for (size_t i = 0; i < inputNeurons.size(); ++i)
         inputNeurons[i]->setInput(input_data[i]);
 
     std::vector<float> result;
@@ -122,7 +122,7 @@ float NeuralNetwork::calculateMistake(std::vector<float> correct_output, bool pr
 
     float sum = 0;
     float delta = 0;
-    for (int i = 0; i < outputNeurons.size(); ++i) {
+    for (u_int i = 0; i < outputNeurons.size(); ++i) {
         delta = outputNeurons[i]->getOut() - correct_output[i];
         sum += delta * delta;
     }
@@ -144,7 +144,7 @@ dictionary NeuralNetwork::createDelta(float learning_rate, std::vector<float> co
     // δ = f' * [ Σ(k ∈ Children) Wk*δk ]
 
     // Формируем дельты для выходного слоя нейронов и записываем их в словарь
-    for (int i = 0; i < outputNeurons.size(); ++i) {
+    for (u_int i = 0; i < outputNeurons.size(); ++i) {
         temp = outputNeurons[i]->getOut() - correct_output[i];
         temp = 2 * learning_rate * temp * diffActivate(outputNeurons[i]->getOut());
         neuronDelta.insert(dic_pair(outputNeurons[i], temp));

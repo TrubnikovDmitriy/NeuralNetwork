@@ -9,7 +9,7 @@ Synapse::Synapse(Neuron *_in, Neuron *_out) {
     in = _in;
     out = _out;
     last_dw = 0;
-    weight = random() % 10 - 5;
+    weight = random() % 100 - 50;
 }
 Synapse::Synapse() {
 
